@@ -9,11 +9,10 @@ public class BinarySearch
    {
       if (high < low)
       {
-         return -1;
+         throw new ElementNotFoundError(String.valueOf(target));
       }
 
       int middle = (high + low) / 2;
-      System.out.println(nums[middle]+ " " + low + " " + high);
       if (nums[middle] == target)
       {
          return middle;
@@ -28,12 +27,29 @@ public class BinarySearch
       {
          return search(nums, target, low, middle - 1);
       }
-      return - 1;
+      throw new ElementNotFoundError(String.valueOf(target));
    }
 
    public static void main(String[] args)
    {
       int[] nums = new int[]{ 1, 22, 45, 50, 51, 52, 100, 250};
-      System.out.println(search(nums, 251));
+      int target = 52;
+
+      try
+      {
+         System.out.println(target + " found at index " + search(nums, target));
+      }
+      catch (ElementNotFoundError e)
+      {
+         System.out.println(e.getMessage());
+      }
+   }
+}
+
+class ElementNotFoundError extends Error
+{
+   ElementNotFoundError(String s)
+   {
+      super(s + " not found.");
    }
 }
